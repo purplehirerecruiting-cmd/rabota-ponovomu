@@ -10,6 +10,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    (() => {
+      const p = new URLSearchParams(location.search);
+      const s = (p.get('from') || 'direct').toLowerCase();
+      document.documentElement.dataset.source = s === 'tiktok' ? 'tiktok' : (s === 'instagram' ? 'instagram' : 'direct');
+    })();
+  </script>
 </head>
 <body>
   <main class="page-shell">
@@ -64,7 +71,7 @@
       </a>
 
 
-      <a class="topic-card tiktok-only" id="eduson-card" href="https://f.gdeslon.ru/cf/e552c13c97?mid=102317&amp;erid=Kra23eQ8w&amp;goto=https%3A%2F%2Ffree.eduson.academy%2F" target="_blank" rel="noopener sponsored" hidden>
+      <a class="topic-card tiktok-only" id="eduson-card" href="https://f.gdeslon.ru/cf/e552c13c97?mid=102317&amp;erid=Kra23eQ8w&amp;goto=https%3A%2F%2Ffree.eduson.academy%2F" target="_blank" rel="noopener sponsored">
         <div class="icon">🚀</div>
         <div class="topic-copy">
           <span class="tag">DIGITAL / БИЗНЕС</span>
@@ -104,10 +111,8 @@
         localStorage.setItem('rpn_visits', JSON.stringify(visits));
       } catch (_) {}
 
-      if (channel === 'tiktok') {
-        const eduson = document.getElementById('eduson-card');
-        if (eduson) eduson.hidden = false;
-      }
+      const eduson = document.getElementById('eduson-card');
+      if (eduson) eduson.style.display = channel === 'tiktok' ? '' : 'none';
 
       document.querySelectorAll('a.topic-card[href]').forEach((link) => {
         link.addEventListener('click', () => {
