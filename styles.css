@@ -113,3 +113,7 @@ footer { display: flex; justify-content: space-between; gap: 12px; padding: 24px
   .topic-copy h3 { font-size: 18px; }
   footer { flex-direction: column; }
 }
+
+/* Channel-safe offer routing: TikTok-only offers never render for Instagram/direct traffic. */
+.tiktok-only { display: none; }
+html[data-source="tiktok"] .tiktok-only { display: flex; }
