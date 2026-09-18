@@ -63,6 +63,17 @@
         </div>
       </a>
 
+
+      <a class="topic-card tiktok-only" id="eduson-card" href="https://f.gdeslon.ru/cf/e552c13c97?mid=102317&amp;erid=Kra23eQ8w&amp;goto=https%3A%2F%2Ffree.eduson.academy%2F" target="_blank" rel="noopener sponsored" hidden>
+        <div class="icon">🚀</div>
+        <div class="topic-copy">
+          <span class="tag">DIGITAL / БИЗНЕС</span>
+          <h3>Eduson Academy</h3>
+          <p>Бесплатные курсы и профтесты по digital, аналитике, бизнесу и другим направлениям.</p>
+          <span class="cta">Посмотреть программы →</span>
+        </div>
+      </a>
+
       <div class="topic-card muted-card" aria-disabled="true">
         <div class="icon">💻</div>
         <div class="topic-copy">
@@ -87,5 +98,38 @@
       <span>@rabota.ponovomu</span>
     </footer>
   </main>
+
+  <script>
+    (() => {
+      const params = new URLSearchParams(location.search);
+      const source = (params.get('from') || 'direct').toLowerCase();
+      const allowed = new Set(['instagram', 'tiktok']);
+      const channel = allowed.has(source) ? source : 'direct';
+
+      try {
+        localStorage.setItem('rpn_source', channel);
+        localStorage.setItem('rpn_landing_at', new Date().toISOString());
+        const visits = JSON.parse(localStorage.getItem('rpn_visits') || '{}');
+        visits[channel] = (visits[channel] || 0) + 1;
+        localStorage.setItem('rpn_visits', JSON.stringify(visits));
+      } catch (_) {}
+
+      if (channel === 'tiktok') {
+        const eduson = document.getElementById('eduson-card');
+        if (eduson) eduson.hidden = false;
+      }
+
+      document.querySelectorAll('a.topic-card[href]').forEach((link) => {
+        link.addEventListener('click', () => {
+          const name = link.querySelector('h3')?.textContent?.trim() || 'unknown';
+          try {
+            const clicks = JSON.parse(localStorage.getItem('rpn_clicks') || '[]');
+            clicks.push({source: channel, offer: name, at: new Date().toISOString()});
+            localStorage.setItem('rpn_clicks', JSON.stringify(clicks.slice(-100)));
+          } catch (_) {}
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
